@@ -11,8 +11,8 @@ class ReservationService {
     const overlappingReservation = this.repository.findAll().find((reservation) => {
       return (
         reservation.roomId === newReservation.roomId &&
-        reservation.checkOutDate >= newReservation.checkInDate &&
-        reservation.checkInDate <= newReservation.checkOutDate
+        reservation.checkOutDate > newReservation.checkInDate &&
+        reservation.checkInDate < newReservation.checkOutDate
       );
     });
 
