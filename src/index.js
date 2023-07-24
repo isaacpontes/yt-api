@@ -1,13 +1,7 @@
 const app = require("./app");
 
-const start = async () => {
-  try {
-    await app.listen({ port: 3000 });
-    app.log.info(`Server is running on ${app.server.address().port}`);
-  } catch (err) {
-    app.log.error(err);
-    process.exit(1);
-  }
-};
+const PORT = 3000;
 
-start();
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+})

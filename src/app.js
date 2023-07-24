@@ -1,25 +1,27 @@
-const fastify = require("fastify");
+const express = require('express');
 const ReservationRepository = require("./reservations/ReservationRepository.js");
 const ReservationService = require("./reservations/ReservationService.js");
 
-const app = fastify({ logger: true });
+const app = express();
 
 const reservationRepository = new ReservationRepository();
 const reservationService = new ReservationService(reservationRepository);
 
-app.post("/api/reservations", async (request, reply) => {
+app.use(express.json());
+
+app.post("/api/reservations", async (req, res) => {
   try {
-    const { roomId, guestName, checkInDate, checkOutDate } = request.body;
+    const { roomId, guestName, checkInDate, checkOutDate } = req.body;
 
     if (!roomId || !guestName || !checkInDate || !checkOutDate) {
-      return reply.code(400).send({ message: "All fields are required." });
+      return res.status(400).json({ message: "All fields are required." });
     }
 
-    const reservation = reservationService.createReservation(roomId, guestName, checkInDate, checkOutDate);
+    const reservation = reservationService.createReservation({ roomId, guestName, checkInDate, checkOutDate });
 
-    return reply.code(201).send({ message: "Reservation created successfully.", reservation });
+    return res.status(201).json({ message: "Reservation created successfully.", reservation });
   } catch (error) {
-    return reply.code(409).send({ message: error.message });
+    return res.status(409).json({ message: error.message });
   }
 });
 
