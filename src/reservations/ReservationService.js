@@ -5,6 +5,10 @@ class ReservationService {
     this.repository = repository;
   }
 
+  findAllReservations() {
+    return this.repository.findAll();
+  }
+
   createReservation({ roomId, guestName, checkInDate, checkOutDate }) {
     const newReservation = new Reservation(roomId, guestName, checkInDate, checkOutDate);
 

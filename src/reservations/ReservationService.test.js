@@ -24,6 +24,15 @@ describe("ReservationService Unit Tests", () => {
     expect(reservation).toHaveProperty("checkOutDate", "2023-08-05");
   });
 
+  it("should return all reservations", () => {
+    const reservation = reservationService.createReservation(reservationMock);
+
+    const reservations = reservationService.findAllReservations();
+
+    expect(reservations.length).toBe(1);
+    expect(reservations).toContain(reservation);
+  })
+
   it("should throw an error for overlapping dates", () => {
     reservationService.createReservation(reservationMock);
 
