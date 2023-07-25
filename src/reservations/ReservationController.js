@@ -5,7 +5,7 @@ class ReservationController {
 
   index = (req, res) => {
     try {
-      const reservations = reservationService.findAllReservations();
+      const reservations = this.service.findAllReservations();
       return res.json(reservations);
     } catch (error) {
       return res.status(409).json({ message: error.message });

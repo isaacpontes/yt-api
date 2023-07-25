@@ -17,6 +17,15 @@ describe('Hotel Booking API Integration Tests', () => {
     expect(response.body).toHaveProperty('reservation');
   });
 
+  it('should return all reservations', async () => {
+    await request(app).post('/api/reservations').send(reservationMock);
+
+    const response = await request(app).get('/api/reservations')
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(1);
+  })
+
   it('should not create a reservation with missing fields', async () => {
     const invalidReservation = {
       roomId: 1,
