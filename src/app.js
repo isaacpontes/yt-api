@@ -1,24 +1,22 @@
-const express = require('express');
+const fastify = require('fastify');
 const BookingRepository = require("./bookings/BookingRepository.js");
 const BookingService = require("./bookings/BookingService.js");
 const BookingController = require('./bookings/BookingController.js');
 
-const app = express();
+const app = fastify({ logger: process.env.NODE_ENV !== 'test' });
 
 const bookingRepository = new BookingRepository();
 const bookingService = new BookingService(bookingRepository);
 const bookingController = new BookingController(bookingService);
 
-app.use(express.json());
-
-app.post("/api/bookings", (req, res) => {
-  const { code, body } = bookingController.save(req);
-  res.status(code).json(body);
+app.post("/api/bookings", (request, reply) => {
+  const { code, body } = bookingController.save(request);
+  reply.code(code).send(body);
 });
 
-app.get("/api/bookings", (req, res) => {
+app.get("/api/bookings", (request, reply) => {
   const { code, body } = bookingController.index();
-  res.status(code).json(body);
+  reply.code(code).send(body);
 });
 
 module.exports = app;
