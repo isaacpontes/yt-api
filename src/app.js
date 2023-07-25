@@ -1,17 +1,17 @@
 const express = require('express');
-const ReservationRepository = require("./reservations/ReservationRepository.js");
-const ReservationService = require("./reservations/ReservationService.js");
-const ReservationController = require('./reservations/ReservationController.js');
+const BookingRepository = require("./bookings/BookingRepository.js");
+const BookingService = require("./bookings/BookingService.js");
+const BookingController = require('./bookings/BookingController.js');
 
 const app = express();
 
-const reservationRepository = new ReservationRepository();
-const reservationService = new ReservationService(reservationRepository);
-const reservationController = new ReservationController(reservationService);
+const bookingRepository = new BookingRepository();
+const bookingService = new BookingService(bookingRepository);
+const bookingController = new BookingController(bookingService);
 
 app.use(express.json());
 
-app.post("/api/reservations", reservationController.save);
-app.get("/api/reservations", reservationController.index);
+app.post("/api/bookings", bookingController.save);
+app.get("/api/bookings", bookingController.index);
 
 module.exports = app;

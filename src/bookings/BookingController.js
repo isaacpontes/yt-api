@@ -1,12 +1,12 @@
-class ReservationController {
+class BookingController {
   constructor(service) {
     this.service = service;
   }
 
   index = (req, res) => {
     try {
-      const reservations = this.service.findAllReservations();
-      return res.json(reservations);
+      const bookings = this.service.findAllBookings();
+      return res.json(bookings);
     } catch (error) {
       return res.status(409).json({ message: error.message });
     }
@@ -20,13 +20,13 @@ class ReservationController {
         return res.status(400).json({ message: "All fields are required." });
       }
 
-      const reservation = this.service.createReservation({ roomId, guestName, checkInDate, checkOutDate });
+      const booking = this.service.createBooking({ roomId, guestName, checkInDate, checkOutDate });
 
-      return res.status(201).json({ message: "Reservation created successfully.", reservation });
+      return res.status(201).json({ message: "Booking created successfully.", booking });
     } catch (error) {
       return res.status(409).json({ message: error.message });
     }
   }
 }
 
-module.exports = ReservationController;
+module.exports = BookingController;

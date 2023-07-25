@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 
-class Reservation {
+class Booking {
   constructor(roomId, guestName, checkInDate, checkOutDate) {
     this.id = uuidv4();
     this.roomId = roomId;
@@ -10,4 +10,4 @@ class Reservation {
   }
 }
 
-module.exports = Reservation;
+module.exports = Booking;
