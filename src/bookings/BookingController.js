@@ -3,28 +3,28 @@ class BookingController {
     this.service = service;
   }
 
-  index = (req, res) => {
+  index() {
     try {
       const bookings = this.service.findAllBookings();
-      return res.json(bookings);
+      return { code: 200, body: bookings };
     } catch (error) {
-      return res.status(409).json({ message: error.message });
+      return { code: 409, body: { message: error.message } };
     }
   }
 
-  save = (req, res) => {
+  save(request) {
     try {
-      const { roomId, guestName, checkInDate, checkOutDate } = req.body;
+      const { roomId, guestName, checkInDate, checkOutDate } = request.body;
 
       if (!roomId || !guestName || !checkInDate || !checkOutDate) {
-        return res.status(400).json({ message: "All fields are required." });
+        return { code: 400, body: { message: "All fields are required." } };
       }
 
       const booking = this.service.createBooking({ roomId, guestName, checkInDate, checkOutDate });
 
-      return res.status(201).json({ message: "Booking created successfully.", booking });
+      return { code: 201, body: { message: "Booking created successfully.", booking } };
     } catch (error) {
-      return res.status(409).json({ message: error.message });
+      return { code: 409, body: { message: error.message } };
     }
   }
 }

@@ -11,7 +11,14 @@ const bookingController = new BookingController(bookingService);
 
 app.use(express.json());
 
-app.post("/api/bookings", bookingController.save);
-app.get("/api/bookings", bookingController.index);
+app.post("/api/bookings", (req, res) => {
+  const { code, body } = bookingController.save(req);
+  res.status(code).json(body);
+});
+
+app.get("/api/bookings", (req, res) => {
+  const { code, body } = bookingController.index();
+  res.status(code).json(body);
+});
 
 module.exports = app;
